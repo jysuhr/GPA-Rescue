@@ -147,6 +147,14 @@ gameCorporation.period = int(input("사업의 계약 기간을 입력하세요: 
 '''
 
 # NPV 계산
+'''
+deposit=int(input('1년에 예금할 금액: '))
+interest_rate=int(input('이자율(%): '))
+i=interest_rate/100
+n=int(input('몇년 뒤의 가치를 계산?: '))
+annual_value=(deposit)*(((i+1)**n)-1)/(i*((i+1)**n))
+print('NPV는 %.2f입니다.' %(annual_value))
+'''
 # gameCorporation.npvCal()
 
 
