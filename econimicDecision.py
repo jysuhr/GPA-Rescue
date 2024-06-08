@@ -132,8 +132,6 @@ space(2, 7)
 oldNpv_label = Label(root, text = "계산전", font = ("맑은고딕", 16))
 oldNpv_label.grid(column=3, row=7, padx=10)
 
-    #TODO: old NPV Label 추가
-
 # ROI
 roi_label = Label(root, text = "ROI(투자대비 수익)", font = ("맑은고딕", 12, "bold"))
 roi_label.grid(column=0, row=8, sticky="w", padx=10)
@@ -177,13 +175,16 @@ def resultCal():
     oldRoi_label.config(text="%.2f" % oldBusiness.roi)
 
 # 설명 버튼 함수
+def explan1(neyo):
+    explan1_label = Label(root, text=neyo, font = ("맑은고딕", 11))
+    explan1_label.grid(row=10, column=0, columnspan=4, padx=10, pady=(10, 0), sticky="ew")
+
+def explan2(neyo):
+    explan2_label = Label(root, text=neyo, font = ("맑은고딕", 11))
+    explan2_label.grid(row=11, column=0, columnspan=4, padx=10, sticky="ew")
 
 def explanation():
-
-    def explan1(neyo):
-        explan1_label = Label(root, text=neyo, font = ("맑은고딕", 11))
-        explan1_label.grid(row=10, column=0, columnspan=5, padx=10, pady=(20, 0), sticky="ew")
-
+    # NPV 설명
     if newBusiness.npv > oldBusiness.npv:
         explan1(f"{newBusiness.name}의 NPV가 {oldBusiness.name}의 NPV보다 큽니다. {newBusiness.name}가 이득입니다.")
         newNpv_label.config(fg="blue")
@@ -197,10 +198,7 @@ def explanation():
         newNpv_label.config(fg="green")
         oldNpv_label.config(fg="green")
 
-    def explan2(neyo):
-        explan2_label = Label(root, text=neyo, font = ("맑은고딕", 11))
-        explan2_label.grid(row=11, column=0, columnspan=5, padx=10, sticky="ew")
-
+    # ROI 설명
     if newBusiness.roi > oldBusiness.roi:
         explan2(f"{newBusiness.name}가 {oldBusiness.name}보다 투자금 대비 수익률이 좋습니다.")
         newRoi_label.config(fg="blue")
@@ -214,13 +212,40 @@ def explanation():
         newRoi_label.config(fg="green")
         oldRoi_label.config(fg="green")
 
+# 초기화 버튼 함수
+def resetFields():
+    newName_Entry.delete(0, END)
+    newDeposit_Entry.delete(0, END)
+    newProceed_Entry.delete(0, END)
+    newInterest_Entry.delete(0, END)
+    newPeriod_Entry.delete(0, END)
+
+    oldName_Entry.delete(0, END)
+    oldDeposit_Entry.delete(0, END)
+    oldProceed_Entry.delete(0, END)
+    oldInterest_Entry.delete(0, END)
+    oldPeriod_Entry.delete(0, END)
+
+    newNpv_label.config(text="계산전", fg="black")
+    newRoi_label.config(text="계산전", fg="black")
+    oldNpv_label.config(text="계산전", fg="black")
+    oldRoi_label.config(text="계산전", fg="black")
+
+    explan1("")
+    explan2("")
+    newName_Entry.focus()
+
 
 # 계산 버튼
-cal_button = Button(root, text="계산하기", bg="#63aff6", fg="navy", command=resultCal)
+cal_button = Button(root, text="계산하기", width=8, bg="#63aff6", fg="navy", command=resultCal)
 cal_button.grid(row=1, column=4, rowspan=5, padx=10, sticky="ns")
 
 # 결과 설명 버튼
-commentary_button = Button(root, text="결과 설명", bg = "red", fg="white", command=explanation)
+commentary_button = Button(root, text="결과 설명", width=8, bg = "red", fg="white", command=explanation)
 commentary_button.grid(row=7, column=4, rowspan=2, padx=10, sticky="ns")
+
+# 초기화 버튼
+reset_button = Button(root, text="초기화", width=8, bg="gray", fg="white", command=resetFields)
+reset_button.grid(row=10, column=4, rowspan=2, padx=10, pady=10, sticky="ns")
 
 root.mainloop()
