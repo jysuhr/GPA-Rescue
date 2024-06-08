@@ -204,8 +204,8 @@ def resultCal():
 
 #=====================================================================
 
-def explanation(): # FIXME: 멘트 수정
-    explan_label = Label(root, text = f"새 사업의 npv는 {newBusiness.npv}", font = ("맑은고딕", 11))
+def explanation():
+    explan_label = Label(root, text = f"새 사업의 npv는 {newBusiness.npv}", font = ("맑은고딕", 11)) # FIXME: 멘트 수정
     explan_label.grid(row=10, column=0, columnspan=4, padx=10, pady=20, sticky="ew")
 
 # 계산 버튼
