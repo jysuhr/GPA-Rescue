@@ -147,33 +147,7 @@ oldRoi_label = Label(root, text = "계산전", font = ("맑은고딕", 16))
 oldRoi_label.grid(column=3, row=8, padx=10)
 
 
-'''
-newBusiness = Business(None, None, None, None, None)
-oldBusiness = Business(None, None, None, None, None)
-
-def resultCal():
-    newBusiness.name = newName_Entry.get()
-    newBusiness.deposit = int(newDeposit_Entry.get())
-    newBusiness.proceed = int(newProceed_Entry.get())
-    newBusiness.interest = float(newInterest_Entry.get())
-    newBusiness.period = int(newPeriod_Entry.get())
-    newBusiness.npvCal()
-    newBusiness.roiCal()
-    newNpv_label.config(text="%.2f" % newBusiness.npv)
-    newRoi_label.config(text="%.2f" % newBusiness.roi)
-
-    oldBusiness.name = oldName_Entry.get()
-    oldBusiness.deposit = int(oldDeposit_Entry.get())
-    oldBusiness.proceed = int(oldProceed_Entry.get())
-    oldBusiness.interest = float(oldInterest_Entry.get())
-    oldBusiness.period = int(oldPeriod_Entry.get())
-    oldBusiness.npvCal()
-    oldBusiness.roiCal()
-    oldNpv_label.config(text="%.2f" % oldBusiness.npv)
-    oldRoi_label.config(text="%.2f" % oldBusiness.roi)
-'''
-#=====================================================================
-
+# 계산 버튼 함수
 
 def resultCal():
     global newBusiness, oldBusiness
@@ -202,11 +176,44 @@ def resultCal():
     oldNpv_label.config(text="%.2f" % oldBusiness.npv)
     oldRoi_label.config(text="%.2f" % oldBusiness.roi)
 
-#=====================================================================
+# 설명 버튼 함수
 
 def explanation():
-    explan_label = Label(root, text = f"새 사업의 npv는 {newBusiness.npv}", font = ("맑은고딕", 11)) # FIXME: 멘트 수정
-    explan_label.grid(row=10, column=0, columnspan=4, padx=10, pady=20, sticky="ew")
+
+    def explan1(neyo):
+        explan1_label = Label(root, text=neyo, font = ("맑은고딕", 11))
+        explan1_label.grid(row=10, column=0, columnspan=5, padx=10, pady=(20, 0), sticky="ew")
+
+    if newBusiness.npv > oldBusiness.npv:
+        explan1(f"{newBusiness.name}의 NPV가 {oldBusiness.name}의 NPV보다 큽니다. {newBusiness.name}가 이득입니다.")
+        newNpv_label.config(fg="blue")
+
+    elif newBusiness.npv < oldBusiness.npv:
+        explan1(f"{newBusiness.name}의 NPV가 {oldBusiness.name}의 NPV보다 작습니다. {oldBusiness.name}가 이득입니다.")
+        oldNpv_label.config(fg="blue")
+    
+    else:
+        explan1(f"{newBusiness.name}의 NPV와 {oldBusiness.name}의 NPV가 같습니다.")
+        newNpv_label.config(fg="green")
+        oldNpv_label.config(fg="green")
+
+    def explan2(neyo):
+        explan2_label = Label(root, text=neyo, font = ("맑은고딕", 11))
+        explan2_label.grid(row=11, column=0, columnspan=5, padx=10, sticky="ew")
+
+    if newBusiness.roi > oldBusiness.roi:
+        explan2(f"{newBusiness.name}가 {oldBusiness.name}보다 투자금 대비 수익률이 좋습니다.")
+        newRoi_label.config(fg="blue")
+
+    elif newBusiness.roi < oldBusiness.roi:
+        explan2(f"{oldBusiness.name}가 {newBusiness.name}보다 투자금 대비 수익률이 좋습니다.")
+        oldRoi_label.config(fg="blue")
+    
+    else:
+        explan2(f"{newBusiness.name}과 {oldBusiness.name}의 투자금 대비 수익률이 같습니다.")
+        newRoi_label.config(fg="green")
+        oldRoi_label.config(fg="green")
+
 
 # 계산 버튼
 cal_button = Button(root, text="계산하기", bg="#63aff6", fg="navy", command=resultCal)
