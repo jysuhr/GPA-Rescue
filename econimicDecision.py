@@ -146,6 +146,8 @@ space(2, 8)
 oldRoi_label = Label(root, text = "계산전", font = ("맑은고딕", 16))
 oldRoi_label.grid(column=3, row=8, padx=10)
 
+
+'''
 newBusiness = Business(None, None, None, None, None)
 oldBusiness = Business(None, None, None, None, None)
 
@@ -169,10 +171,49 @@ def resultCal():
     oldBusiness.roiCal()
     oldNpv_label.config(text="%.2f" % oldBusiness.npv)
     oldRoi_label.config(text="%.2f" % oldBusiness.roi)
+'''
+#=====================================================================
+
+
+def resultCal():
+    global newBusiness, oldBusiness
+
+    newBusiness = Business(
+        name=newName_Entry.get(),
+        deposit=int(newDeposit_Entry.get()),
+        proceed=int(newProceed_Entry.get()),
+        interest=float(newInterest_Entry.get()),
+        period=int(newPeriod_Entry.get())
+    )
+    newBusiness.npvCal()
+    newBusiness.roiCal()
+    newNpv_label.config(text="%.2f" % newBusiness.npv)
+    newRoi_label.config(text="%.2f" % newBusiness.roi)
+
+    oldBusiness = Business(
+        name=oldName_Entry.get(),
+        deposit=int(oldDeposit_Entry.get()),
+        proceed=int(oldProceed_Entry.get()),
+        interest=float(oldInterest_Entry.get()),
+        period=int(oldPeriod_Entry.get())
+    )
+    oldBusiness.npvCal()
+    oldBusiness.roiCal()
+    oldNpv_label.config(text="%.2f" % oldBusiness.npv)
+    oldRoi_label.config(text="%.2f" % oldBusiness.roi)
+
+#=====================================================================
+
+def explanation(): # FIXME: 멘트 수정
+    explan_label = Label(root, text = f"새 사업의 npv는 {newBusiness.npv}", font = ("맑은고딕", 11))
+    explan_label.grid(row=10, column=0, columnspan=4, padx=10, pady=20, sticky="ew")
 
 # 계산 버튼
-cal_button = Button(root, text="계산하기", height=3, bg="#63aff6", fg="navy", command=resultCal) # TODO: command 추가해야함
+cal_button = Button(root, text="계산하기", bg="#63aff6", fg="navy", command=resultCal)
 cal_button.grid(row=1, column=4, rowspan=5, padx=10, sticky="ns")
 
+# 결과 설명 버튼
+commentary_button = Button(root, text="결과 설명", bg = "red", fg="white", command=explanation)
+commentary_button.grid(row=7, column=4, rowspan=2, padx=10, sticky="ns")
 
 root.mainloop()
